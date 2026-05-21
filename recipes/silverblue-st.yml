@@ -1,4 +1,4 @@
-name: silverblue-off
+name: silverblue-st
 description: Imagen base para off con Keybase, Syncthing y Tailscale
 base-image: ghcr.io/ublue-os/silverblue-main
 image-version: "44"
