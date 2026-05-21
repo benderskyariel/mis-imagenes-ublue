@@ -1,0 +1,17 @@
+name: silverblue-off
+description: Imagen base para off con Keybase, Syncthing y Tailscale
+base-image: ghcr.io/ublue-os/silverblue-main
+image-version: "44"
+modules:
+  - type: dnf
+    repos:
+      files:
+        - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+    install:
+      packages:
+        - syncthing
+        - tailscale
+        - ncdu
+        - https://prerelease.keybase.io/keybase_amd64.rpm
+        - python3-tkinter
+        - gnome-tweaks
