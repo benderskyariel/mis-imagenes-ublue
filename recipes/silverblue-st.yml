@@ -9,7 +9,6 @@ modules:
         - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
     install:
       packages:
-        - waypipe
         - syncthing
         - tailscale
         - ncdu
