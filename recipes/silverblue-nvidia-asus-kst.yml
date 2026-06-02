@@ -18,3 +18,5 @@ modules:
         - asusctl
         - asusctl-rog-gui
         - gnome-tweaks
+        - waydroid
+        - waydroid-selinux
