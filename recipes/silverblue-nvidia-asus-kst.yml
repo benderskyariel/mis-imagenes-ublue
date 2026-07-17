@@ -14,7 +14,6 @@ modules:
         - syncthing
         - tailscale
         - ncdu
-        - https://prerelease.keybase.io/keybase_amd64.rpm
         - asusctl
         - asusctl-rog-gui
         - gnome-tweaks
