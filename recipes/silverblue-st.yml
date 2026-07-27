@@ -12,6 +12,5 @@ modules:
         - syncthing
         - tailscale
         - ncdu
-        - https://prerelease.keybase.io/keybase_amd64.rpm
         - python3-tkinter
         - gnome-tweaks
