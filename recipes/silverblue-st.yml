@@ -4,6 +4,8 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: "44"
 modules:
   - type: files
+    files:
+      - usr: /usr
 
   - type: dnf
     repos:
@@ -22,9 +24,7 @@ modules:
       - prepare-keybase.sh
 
   - type: script
-    inline: |
-      # Dar permisos de ejecución al script de sincronización local
-      chmod +x /usr/bin/sync-keybase
-      # Crear el enlace simbólico para que el servicio de Systemd esté activo por defecto para tu usuario
-      mkdir -p /usr/lib/systemd/user/default.target.wants
-      ln -sf /usr/lib/systemd/user/sync-keybase.service /usr/lib/systemd/user/default.target.wants/sync-keybase.service
+    snippets:
+      - "chmod +x /usr/bin/sync-keybase"
+      - "mkdir -p /usr/lib/systemd/user/default.target.wants"
+      - "ln -sf /usr/lib/systemd/user/sync-keybase.service /usr/lib/systemd/user/default.target.wants/sync-keybase.service"
