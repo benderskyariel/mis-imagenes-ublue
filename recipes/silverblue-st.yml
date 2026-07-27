@@ -5,7 +5,8 @@ image-version: "44"
 modules:
   - type: files
     files:
-      - usr: /usr
+      - source: system
+        destination: /
 
   - type: dnf
     repos:
