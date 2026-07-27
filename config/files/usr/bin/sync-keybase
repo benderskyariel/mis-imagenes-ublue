@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BIN_DIR="$HOME/.local/bin"
+SHARE_DIR="$HOME/.local/share"
+SYSTEMD_DIR="$HOME/.config/systemd/user"
+TEMPLATE_DIR="/usr/share/keybase-template"
+
+# Detener procesos activos antes de sincronizar
+killall -9 keybase kbfsfuse Keybase keybase-gui keybase-redirector 2>/dev/null || true
+systemctl --user stop keybase.service kbfs.service keybase.gui.service 2>/dev/null || true
+
+mkdir -p "$BIN_DIR" "$SHARE_DIR" "$SYSTEMD_DIR"
+
+# Sincronizar desde la plantilla de la imagen hacia el espacio de usuario local
+cp -f "$TEMPLATE_DIR/usr/bin"/* "$BIN_DIR/"
+cp -rf "$TEMPLATE_DIR/usr/share"/* "$SHARE_DIR/"
+rm -rf "$SHARE_DIR/keybase"
+cp -rf "$TEMPLATE_DIR/opt/keybase" "$SHARE_DIR/"
+cp -f "$TEMPLATE_DIR/usr/lib/systemd/user"/* "$SYSTEMD_DIR/"
+
+# Aplicar correcciones de rutas y aceleración para evitar problemas gráficos
+sed -i "s|/usr/bin/|$BIN_DIR/|g" "$SYSTEMD_DIR/keybase.service"
+sed -i "s|/usr/bin/|$BIN_DIR/|g" "$SYSTEMD_DIR/kbfs.service"
+sed -i "s|ExecStart=/opt/keybase/Keybase|ExecStart=$SHARE_DIR/keybase/Keybase --no-sandbox --disable-seccomp-filter-sandbox --disable-gpu --disable-gpu-sandbox|g" "$SYSTEMD_DIR/keybase.gui.service"
+sed -i "s|/opt/keybase|$SHARE_DIR/keybase|g" "$BIN_DIR/run_keybase"
+sed -i "s|/usr/bin/run_keybase|$BIN_DIR/run_keybase|g" "$SHARE_DIR/applications/keybase.desktop"
+
+# Recargar los servicios de usuario de Systemd
+systemctl --user daemon-reload
+systemctl --user enable keybase.service kbfs.service keybase.gui.service
