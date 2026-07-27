@@ -1,0 +1,11 @@
+[Unit]
+Description=Sincronizar Keybase local desde la plantilla del sistema
+After=default.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sync-keybase
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
