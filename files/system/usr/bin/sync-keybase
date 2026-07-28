@@ -28,4 +28,12 @@ sed -i "s|/usr/bin/run_keybase|$BIN_DIR/run_keybase|g" "$SHARE_DIR/applications/
 
 # Recargar los servicios de usuario de Systemd
 systemctl --user daemon-reload
-systemctl --user enable keybase.service kbfs.service keybase.gui.service
+
+# Habilitar únicamente el demonio de Keybase y el sistema de archivos KBFS
+systemctl --user enable keybase.service kbfs.service
+
+# Asegurar que la GUI no se inicie automáticamente con el sistema
+systemctl --user disable keybase.gui.service 2>/dev/null || true
+
+# Eliminar posibles archivos de autostart que la GUI de Keybase genere por su cuenta
+rm -f "$HOME/.config/autostart/keybase_autostart.desktop" 2>/dev/null || true
