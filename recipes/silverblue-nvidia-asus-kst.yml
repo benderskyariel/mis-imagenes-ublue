@@ -3,11 +3,8 @@ description: Imagen para Plata con software de Asus, Keybase, Syncthing y Tailsc
 base-image: ghcr.io/ublue-os/silverblue-nvidia
 image-version: "44"
 modules:
-  - type: files
-    files:
-      - source: system
-        destination: /
-        
+  - from-file: keybase-setup.yml
+
   - type: dnf
     repos:
       copr:
@@ -24,13 +21,3 @@ modules:
         - gnome-tweaks
         - waydroid
         - waydroid-selinux
-
-  - type: script
-    scripts:
-      - prepare-keybase.sh
-
-  - type: script
-    snippets:
-      - "chmod +x /usr/bin/sync-keybase"
-      - "mkdir -p /usr/lib/systemd/user/default.target.wants"
-      - "ln -sf /usr/lib/systemd/user/sync-keybase.service /usr/lib/systemd/user/default.target.wants/sync-keybase.service"
