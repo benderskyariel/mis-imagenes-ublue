@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/module-v1.json
+
+# Shared dnf setup for the non-ASUS recipes (silverblue-st, silverblue-nvidia-kst).
+type: dnf
+repos:
+  files:
+    - https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+install:
+  packages:
+    - syncthing
+    - tailscale
+    - ncdu
+    - python3-tkinter
+    - gnome-tweaks
