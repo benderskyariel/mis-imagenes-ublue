@@ -34,3 +34,7 @@ modules:
       - "chmod +x /usr/bin/sync-keybase"
       - "mkdir -p /usr/lib/systemd/user/default.target.wants"
       - "ln -sf /usr/lib/systemd/user/sync-keybase.service /usr/lib/systemd/user/default.target.wants/sync-keybase.service"
+      # --- Preparación para Nix ---
+      - "mkdir -p /nix"
+      - "mkdir -p /usr/lib/systemd/system/local-fs.target.wants"
+      - "ln -sf /usr/lib/systemd/system/nix.mount /usr/lib/systemd/system/local-fs.target.wants/nix.mount"
